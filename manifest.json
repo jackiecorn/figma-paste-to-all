@@ -1,0 +1,9 @@
+{
+	"id": "paste-to-all",
+	"name": "Paste to All",
+	"author": "Jackie Chui",
+	"description": "Paste copied layer into all selected frames.",
+	"instructions": "Copy a layer, then select multiple frames and press Cmd/Ctrl + V to paste, or Cmd/Ctrl + Shift + V to paste over selection.",
+	"images": ["preview.gif"],
+	"js": ["app.js"]
+}
