@@ -1,61 +1,48 @@
-const pasteToAll = pasteOverSelection => {
+const pasteToAll = (pasteOverSelection, event) => {
 	const selectedFrames = pasteOverSelection
-		? figmaPlus.scene.selection
-		: figmaPlus.scene.selection.filter(selection => selection.type === 'FRAME');
-	if (pasteOverSelection) App.triggerAction('delete-selection');
+		? figmaPlus.currentPage.selection
+		: figmaPlus.currentPage.selection.filter(selection => selection.type === 'FRAME');
+	if (pasteOverSelection && event.type === 'keydown') App.triggerAction('delete-selection');
 	for (let selectedFrame of selectedFrames) {
-		figmaPlus.scene.selection = [selectedFrame];
+		figmaPlus.currentPage.selection = [selectedFrame];
 		pasteOverSelection ? App.triggerAction('paste-over-selection') : App.triggerAction('paste');
 	}
 };
 
-const placeInPlaceShortcut = {
-	mac: {
-		command: true,
-		key: 'V'
-	},
-	windows: {
-		control: true,
-		key: 'V'
-	}
-};
-
-const placeOverSelectionShortcut = {
-	mac: {
-		command: true,
-		shift: true,
-		key: 'V'
-	},
-	windows: {
-		control: true,
-		shift: true,
-		key: 'V'
-	}
-};
-
-figmaPlus.createPluginsMenuItem('Paste to All', pasteToAll, null, null, [
-	{
-		itemLabel: 'Paste in Place',
-		triggerFunction: () => pasteToAll(false),
-		condition: null,
-		shortcut: placeInPlaceShortcut
-	},
-	{
-		itemLabel: 'Paste Over Selection',
-		triggerFunction: () => pasteToAll(true),
-		condition: null,
-		shortcut: placeOverSelectionShortcut
-	}
-]);
-
-figmaPlus.createKeyboardShortcut(
-	placeInPlaceShortcut,
-	() => pasteToAll(false),
-	() => figmaPlus.scene.selection.length > 1
-);
-
-figmaPlus.createKeyboardShortcut(
-	placeOverSelectionShortcut,
-	() => pasteToAll(true),
-	() => figmaPlus.scene.selection.length > 1
-);
+figmaPlus.addCommand({
+	label: 'Paste to All',
+	submenu: [
+		{
+			label: 'Paste in Place',
+			action: e => pasteToAll(false, e),
+			condition: () => figmaPlus.currentPage.selection.length > 0,
+			shortcut: {
+				mac: {
+					command: true,
+					key: 'V'
+				},
+				windows: {
+					control: true,
+					key: 'V'
+				}
+			}
+		},
+		{
+			label: 'Paste Over Selection',
+			action: e => pasteToAll(true, e),
+			condition: () => figmaPlus.currentPage.selection.length > 0,
+			shortcut: {
+				mac: {
+					command: true,
+					shift: true,
+					key: 'V'
+				},
+				windows: {
+					control: true,
+					shift: true,
+					key: 'V'
+				}
+			}
+		}
+	]
+});
