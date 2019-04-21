@@ -11,6 +11,7 @@ const pasteToAll = (pasteOverSelection, event) => {
 
 figmaPlus.addCommand({
 	label: 'Paste to All',
+	condition: () => figmaPlus.currentPage.selection.length > 0,
 	submenu: [
 		{
 			label: 'Paste in Place',
