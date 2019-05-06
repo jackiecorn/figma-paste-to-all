@@ -16,7 +16,9 @@ figmaPlus.addCommand({
 		{
 			label: 'Paste in Place',
 			action: e => pasteToAll(false, e),
-			condition: () => figmaPlus.currentPage.selection.length > 0,
+			condition: () =>
+				figmaPlus.currentPage.selection.length > 0 &&
+				figmaPlus.currentPage.selection.every(node => node.type === 'FRAME'),
 			shortcut: {
 				mac: {
 					command: true,
@@ -31,7 +33,9 @@ figmaPlus.addCommand({
 		{
 			label: 'Paste Over Selection',
 			action: e => pasteToAll(true, e),
-			condition: () => figmaPlus.currentPage.selection.length > 0,
+			condition: () =>
+				figmaPlus.currentPage.selection.length > 0 &&
+				figmaPlus.currentPage.selection.every(node => node.type === 'FRAME'),
 			shortcut: {
 				mac: {
 					command: true,
