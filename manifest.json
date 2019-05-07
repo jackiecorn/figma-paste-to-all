@@ -3,7 +3,7 @@
 	"name": "Paste to All",
 	"author": "Jackie Chui",
 	"description": "Paste copied layer into all selected frames.",
-	"instructions": "Copy a layer, then select multiple frames and press Cmd/Ctrl + V to paste, or Cmd/Ctrl + Shift + V to paste over selection.",
+	"instructions": "Copy a layer, select multiple frames then right click -> Figma Plus -> Paste to All. Note: If you are pasting objects from outside your document, make sure to paste them once into your canvas before using the Paste to All command.",
 	"images": ["preview.gif"],
 	"js": ["app.js"]
 }
