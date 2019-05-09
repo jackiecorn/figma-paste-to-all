@@ -1,29 +1,29 @@
 const paste = () => {
-	const selectedFrames = figmaPlus.currentPage.selection.filter(selection => selection.type === 'FRAME');
+	const selectedFrames = figma.currentPage.selection.filter(selection => selection.type === 'FRAME');
 	if (selectedFrames.length === 0) {
 		figmaPlus.showToast({ message: 'Please select one or more frames to paste into' });
 	}
 	for (let selectedFrame of selectedFrames) {
-		figmaPlus.currentPage.selection = [selectedFrame];
+		figma.currentPage.selection = [selectedFrame];
 		App.triggerAction('paste');
 	}
 };
 
 const pasteOverSelection = () => {
-	const selectedFrames = figmaPlus.currentPage.selection;
+	const selectedFrames = figma.currentPage.selection;
 	for (let selectedFrame of selectedFrames) {
-		figmaPlus.currentPage.selection = [selectedFrame];
+		figma.currentPage.selection = [selectedFrame];
 		App.triggerAction('paste-over-selection');
 	}
 };
 
 figmaPlus.addCommand({
 	label: 'Paste to All',
-	condition: () => figmaPlus.currentPage.selection.length > 0,
+	condition: () => figma.currentPage.selection.length > 0,
 	submenu: [
 		{
 			label: 'Paste in Place',
-			condition: () => figmaPlus.currentPage.selection.some(node => node.type === 'FRAME'),
+			condition: () => figma.currentPage.selection.some(node => node.type === 'FRAME'),
 			action: e => paste()
 		},
 		{
